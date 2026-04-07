@@ -1,0 +1,26 @@
+# Python environment
+.venv/
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Model and video artifacts (large, generated or downloadable)
+*.pt
+*.mp4
+
+# Generated run outputs
+count_summary.json
+event_audit.csv
+missed_tracks.csv
+output_*.mp4
+
+# Training and experiment artifacts
+runs/
+result_frames/
+finetune_data/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
