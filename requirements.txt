@@ -1,4 +1,11 @@
-ultralytics
-opencv-python-headless
-numpy
-ipython
+# Plant Counter – dependencies
+# Install into your venv with:
+#   .venv\Scripts\pip install -r requirements.txt
+#
+# Versions confirmed working on this machine (Windows, CPU-only).
+# For GPU inference replace torch with the CUDA build from pytorch.org.
+
+ultralytics==8.4.33
+opencv-python-headless==4.13.0
+numpy==2.4.4
+gradio==6.12.0

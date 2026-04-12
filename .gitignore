@@ -1,26 +1,38 @@
-# Python environment
-.venv/
+# Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
 
-# Jupyter
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Notebook and editor noise
 .ipynb_checkpoints/
+.vscode/
 
-# Model and video artifacts (large, generated or downloadable)
-*.pt
-*.mp4
-
-# Generated run outputs
+# Runtime outputs
+output_*.mp4
 count_summary.json
 event_audit.csv
 missed_tracks.csv
-output_*.mp4
+experiment_results.json
 
-# Training and experiment artifacts
-runs/
-result_frames/
-finetune_data/
+# Temporary/debug artifacts
+*.log
+*.tmp
 
-# OS/editor noise
+# Model weights and checkpoints (keep out of git history)
+*.pt
+*.pth
+*.onnx
+
+# Training cache artifacts
+finetune_data/labels/*.cache
+
+# OS files
 .DS_Store
 Thumbs.db
