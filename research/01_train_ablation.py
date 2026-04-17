@@ -132,6 +132,13 @@ def main():
     all_results = []
 
     for variant in VARIANTS:
+        # Skip if already trained
+        weights_path = proyecto_weights = PROJECT_ROOT / "runs" / "ablation" / variant / "weights" / "best.pt"
+        if weights_path.exists():
+            print(f"  SKIPPING {variant}: weights found at {weights_path}")
+            # Still record existing results if possible or just skip
+            continue
+
         try:
             metrics = train_variant(variant)
             all_results.append(metrics)

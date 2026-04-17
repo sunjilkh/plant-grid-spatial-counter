@@ -1,7 +1,7 @@
 format,size_mb,export_time_sec,exported_path,error,source_variant
 pytorch_fp32,21.45,0,C:\Users\sunzi\Downloads\Plant grid\runs\ablation\yolov8s\weights\best.pt,,
-onnx,42.65,91.0,C:\Users\sunzi\Downloads\Plant grid\runs\ablation\yolov8s\weights\best.onnx,,yolov8s
-onnx_fp16,21.36,5.9,C:\Users\sunzi\Downloads\Plant grid\runs\ablation\yolov8s\weights\best.onnx,,yolov8s
+onnx,42.65,8.2,C:\Users\sunzi\Downloads\Plant grid\runs\ablation\yolov8s\weights\best.onnx,,yolov8s
+onnx_fp16,21.36,8.8,C:\Users\sunzi\Downloads\Plant grid\runs\ablation\yolov8s\weights\best.onnx,,yolov8s
 tflite,,,,No module named 'onnx2tf',yolov8s
 tflite_fp16,,,,No module named 'onnx2tf',yolov8s
 tflite_int8,,,,No module named 'onnx2tf',yolov8s

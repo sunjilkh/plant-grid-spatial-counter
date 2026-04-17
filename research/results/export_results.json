@@ -9,14 +9,14 @@
     "format": "onnx",
     "exported_path": "C:\\Users\\sunzi\\Downloads\\Plant grid\\runs\\ablation\\yolov8s\\weights\\best.onnx",
     "size_mb": 42.65,
-    "export_time_sec": 91.0,
+    "export_time_sec": 8.2,
     "source_variant": "yolov8s"
   },
   {
     "format": "onnx_fp16",
     "exported_path": "C:\\Users\\sunzi\\Downloads\\Plant grid\\runs\\ablation\\yolov8s\\weights\\best.onnx",
     "size_mb": 21.36,
-    "export_time_sec": 5.9,
+    "export_time_sec": 8.8,
     "source_variant": "yolov8s"
   },
   {
