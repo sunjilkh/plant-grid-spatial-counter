@@ -1,4 +1,4 @@
-path: finetune_data
+path: C:\Users\sunzi\Downloads\Plant grid\finetune_data
 train: images/train
 val: images/val
 nc: 1

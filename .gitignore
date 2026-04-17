@@ -1,38 +1,29 @@
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-*.egg-info/
+*$py.class
 
-# Virtual environments
+# Virtual Environment
 .venv/
 venv/
-env/
+ENV/
 
-# Notebook and editor noise
-.ipynb_checkpoints/
-.vscode/
-
-# Runtime outputs
-output_*.mp4
-count_summary.json
-event_audit.csv
-missed_tracks.csv
-experiment_results.json
-
-# Temporary/debug artifacts
-*.log
-*.tmp
-
-# Model weights and checkpoints (keep out of git history)
+# YOLO / Ultralytics
+runs/
 *.pt
-*.pth
 *.onnx
+*.tflite
+*.cache
 
-# Training cache artifacts
+# Dataset stuff
 finetune_data/labels/*.cache
 
-# OS files
+# App uploads and results
+flask_app/static/uploads/*
+flask_app/static/results/*
+!flask_app/static/uploads/.gitkeep
+!flask_app/static/results/.gitkeep
+
+# OS generated files
 .DS_Store
 Thumbs.db

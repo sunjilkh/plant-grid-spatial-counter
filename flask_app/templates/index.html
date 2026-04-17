@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered plant detection and counting system for agriculture">
+    <title>PlantVision AI - Plant Detection & Counting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Animated background particles -->
+    <div class="bg-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">&#127793;</span>
+            <span class="logo-text">PlantVision<span class="logo-ai">AI</span></span>
+        </div>
+        <div class="header-badge">Research-Grade Detection</div>
+    </header>
+
+    <main class="container">
+        <!-- Hero section -->
+        <section class="hero">
+            <h1 id="main-heading">Intelligent Plant Detection & Counting</h1>
+            <p class="hero-subtitle">Upload any image or video — our fine-tuned YOLOv8 model identifies
+               and counts unique plants with high confidence spatial tracking.</p>
+        </section>
+
+        <!-- Upload section -->
+        <section class="upload-section" id="upload-section">
+            <div class="upload-card" id="upload-card">
+                <div class="drop-zone" id="drop-zone">
+                    <div class="drop-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 16V4m0 0L8 8m4-4l4 4"/>
+                            <path d="M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/>
+                        </svg>
+                    </div>
+                    <h3>Drop your file here</h3>
+                    <p>or click to browse</p>
+                    <p class="drop-hint">Supports: JPG, PNG, MP4, AVI, MOV (max 200MB)</p>
+                    <input type="file" id="file-input" accept="image/*,video/*" hidden>
+                </div>
+
+                <!-- Preview -->
+                <div class="preview-area" id="preview-area" hidden>
+                    <div class="preview-header">
+                        <span class="preview-filename" id="preview-filename"></span>
+                        <button class="btn-clear" id="btn-clear" title="Remove file">&times;</button>
+                    </div>
+                    <div class="preview-content">
+                        <img id="preview-image" hidden>
+                        <video id="preview-video" controls hidden></video>
+                    </div>
+                </div>
+
+                <button class="btn-detect" id="btn-detect" disabled>
+                    <span class="btn-text">Detect Plants</span>
+                    <span class="btn-loader" hidden>
+                        <span class="spinner"></span> Processing...
+                    </span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Progress -->
+        <section class="progress-section" id="progress-section" hidden>
+            <div class="progress-card">
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <p class="progress-text" id="progress-text">Analyzing...</p>
+            </div>
+        </section>
+
+        <!-- Results section -->
+        <section class="results-section" id="results-section" hidden>
+            <!-- Stats cards -->
+            <div class="stats-grid">
+                <div class="stat-card stat-primary">
+                    <div class="stat-value" id="stat-count">0</div>
+                    <div class="stat-label">Plants Detected</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-confidence">-</div>
+                    <div class="stat-label">Avg Confidence</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-time">-</div>
+                    <div class="stat-label">Inference Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-model">-</div>
+                    <div class="stat-label">Model</div>
+                </div>
+            </div>
+
+            <!-- Result display -->
+            <div class="result-display">
+                <h2>Detection Result</h2>
+                <div class="result-media">
+                    <img id="result-image" hidden>
+                    <video id="result-video" controls hidden></video>
+                </div>
+
+                <!-- Detections table -->
+                <div class="detections-panel" id="detections-panel" hidden>
+                    <h3>Detection Details</h3>
+                    <div class="table-wrapper">
+                        <table id="detections-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Class</th>
+                                    <th>Confidence</th>
+                                    <th>Bounding Box</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detections-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Model info panel -->
+                <div class="model-panel">
+                    <h3>Model Information</h3>
+                    <div class="model-info-grid" id="model-info-grid"></div>
+                </div>
+            </div>
+
+            <button class="btn-new" id="btn-new">Analyze Another File</button>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>PlantVision AI &mdash; Fine-tuned YOLOv8 for Agriculture</p>
+    </footer>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const btnDetect = document.getElementById('btn-detect');
+        const btnClear = document.getElementById('btn-clear');
+        const btnNew = document.getElementById('btn-new');
+        const previewArea = document.getElementById('preview-area');
+        const previewImage = document.getElementById('preview-image');
+        const previewVideo = document.getElementById('preview-video');
+        const previewFilename = document.getElementById('preview-filename');
+        const resultsSec = document.getElementById('results-section');
+        const progressSec = document.getElementById('progress-section');
+        const uploadSec = document.getElementById('upload-section');
+
+        let selectedFile = null;
+
+        // Drop zone events
+        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('dragover', e => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) handleFile(fileInput.files[0]);
+        });
+
+        function handleFile(file) {
+            selectedFile = file;
+            previewFilename.textContent = file.name;
+            previewArea.hidden = false;
+            dropZone.hidden = true;
+            btnDetect.disabled = false;
+
+            const url = URL.createObjectURL(file);
+            if (file.type.startsWith('video/')) {
+                previewVideo.src = url;
+                previewVideo.hidden = false;
+                previewImage.hidden = true;
+            } else {
+                previewImage.src = url;
+                previewImage.hidden = false;
+                previewVideo.hidden = true;
+            }
+        }
+
+        btnClear.addEventListener('click', () => {
+            selectedFile = null;
+            previewArea.hidden = true;
+            dropZone.hidden = false;
+            btnDetect.disabled = true;
+            fileInput.value = '';
+        });
+
+        btnNew.addEventListener('click', () => {
+            resultsSec.hidden = true;
+            uploadSec.hidden = false;
+            btnClear.click();
+        });
+
+        btnDetect.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            const btnText = btnDetect.querySelector('.btn-text');
+            const btnLoader = btnDetect.querySelector('.btn-loader');
+            btnText.hidden = true;
+            btnLoader.hidden = false;
+            btnDetect.disabled = true;
+            progressSec.hidden = false;
+
+            const bar = document.getElementById('progress-bar');
+            const pText = document.getElementById('progress-text');
+            bar.style.width = '30%';
+            pText.textContent = 'Uploading file...';
+
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            try {
+                bar.style.width = '50%';
+                pText.textContent = 'Running detection model...';
+
+                const resp = await fetch('/detect', { method: 'POST', body: formData });
+                const data = await resp.json();
+
+                bar.style.width = '90%';
+                pText.textContent = 'Processing results...';
+
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    return;
+                }
+
+                // Show results
+                bar.style.width = '100%';
+                setTimeout(() => {
+                    progressSec.hidden = true;
+                    uploadSec.hidden = true;
+                    showResults(data);
+                }, 400);
+
+            } catch (err) {
+                alert('Network error: ' + err.message);
+            } finally {
+                btnText.hidden = false;
+                btnLoader.hidden = true;
+                btnDetect.disabled = false;
+            }
+        });
+
+        function showResults(data) {
+            resultsSec.hidden = false;
+
+            // Animate count
+            animateCount('stat-count', data.plant_count);
+
+            // Stats
+            const cs = data.confidence_stats || {};
+            document.getElementById('stat-confidence').textContent =
+                cs.mean ? `${(cs.mean * 100).toFixed(1)}%` : '-';
+            document.getElementById('stat-time').textContent =
+                `${data.inference_time_ms.toFixed(0)}ms`;
+
+            const mi = data.model_info || {};
+            document.getElementById('stat-model').textContent =
+                mi.model_name || '-';
+
+            // Show result media
+            const resImg = document.getElementById('result-image');
+            const resVid = document.getElementById('result-video');
+            if (data.input_type === 'video' && data.output_url) {
+                resVid.src = data.output_url;
+                resVid.hidden = false;
+                resImg.hidden = true;
+            } else if (data.output_url) {
+                resImg.src = data.output_url;
+                resImg.hidden = false;
+                resVid.hidden = true;
+            }
+
+            // Detections table
+            const dets = data.detections || [];
+            const panel = document.getElementById('detections-panel');
+            const tbody = document.getElementById('detections-tbody');
+            tbody.innerHTML = '';
+            if (dets.length > 0) {
+                panel.hidden = false;
+                dets.forEach((d, i) => {
+                    const tr = document.createElement('tr');
+                    const confPct = (d.confidence * 100).toFixed(1);
+                    const confClass = d.confidence >= 0.7 ? 'conf-high' :
+                                     d.confidence >= 0.4 ? 'conf-mid' : 'conf-low';
+                    tr.innerHTML = `
+                        <td>${i + 1}</td>
+                        <td><span class="badge">${d.class_name}</span></td>
+                        <td><span class="conf ${confClass}">${confPct}%</span></td>
+                        <td class="bbox">[${d.bbox.join(', ')}]</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Model info grid
+            const grid = document.getElementById('model-info-grid');
+            grid.innerHTML = '';
+            const infoItems = [
+                ['Model', mi.model_name || '-'],
+                ['Parameters', mi.params_millions ? `${mi.params_millions}M` : '-'],
+                ['File Size', mi.file_size_mb ? `${mi.file_size_mb} MB` : '-'],
+                ['Confidence Threshold', mi.conf_threshold || '-'],
+                ['IoU Threshold', mi.iou_threshold || '-'],
+                ['Avg Confidence', cs.mean ? `${(cs.mean*100).toFixed(1)}%` : '-'],
+                ['Min Confidence', cs.min ? `${(cs.min*100).toFixed(1)}%` : '-'],
+                ['Max Confidence', cs.max ? `${(cs.max*100).toFixed(1)}%` : '-'],
+            ];
+
+            infoItems.forEach(([k, v]) => {
+                const item = document.createElement('div');
+                item.className = 'info-item';
+                item.innerHTML = `<span class="info-key">${k}</span><span class="info-val">${v}</span>`;
+                grid.appendChild(item);
+            });
+
+            resultsSec.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function animateCount(elemId, target) {
+            const el = document.getElementById(elemId);
+            let current = 0;
+            const step = Math.max(1, Math.floor(target / 30));
+            const interval = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(interval);
+                }
+                el.textContent = current;
+            }, 30);
+        }
+    </script>
+</body>
+</html>

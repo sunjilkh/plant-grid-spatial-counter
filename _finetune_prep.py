@@ -157,9 +157,9 @@ def main():
 
     # ─── Write data.yaml ──────────────────────────────────────
     data_yaml = OUTPUT_DIR / "data.yaml"
+    abs_dir = OUTPUT_DIR.resolve()
     with open(data_yaml, "w") as f:
-        # Keep this repo-portable; avoid machine-specific absolute paths.
-        f.write("path: finetune_data\n")
+        f.write(f"path: {abs_dir}\n")
         f.write(f"train: images/train\n")
         f.write(f"val: images/val\n")
         f.write(f"nc: 1\n")

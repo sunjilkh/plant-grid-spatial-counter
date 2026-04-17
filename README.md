@@ -1,49 +1,43 @@
-# Plant Grid Spatial Counter
+# PlantVision AI: Professional Spatial Plant Counting
 
-Spatial plant counting prototype for row-based agriculture video.
+An end-to-end, research-grade system for detecting and counting unique plants in agricultural environments. This project combines state-of-the-art object detection (YOLOv8) with spatial tracking to ensure each plant is counted exactly once, even in complex video sequences.
 
-## What this repo contains
+## 🚀 Key Features
 
-- Notebook pipeline: `Untitled25.ipynb`
-- Local web app: `app.py`
-- Fine-tuning dataset: `finetune_data/`
-- Fine-tuning dataset generator: `_finetune_prep.py`
-- Project reports:
-  - `project_progress_report.md`
-  - `project_progress_llm_training_report.md`
+*   **Custom YOLOv8 Training**: Fine-tuned on agricultural data for high-precision plant identification.
+*   **Spatial Counting & Tracking**: Uses BoT-SORT/ByteTrack to maintain unique identities for plants across frames.
+*   **Research Ablation Study**: Systematic comparison of model variants (Nano, Small, Medium, Large) across accuracy, speed, and size.
+*   **Mobile Optimized**: Support for ONNX and TFLite quantization (FP16/INT8) for edge device deployment.
+*   **Production Flask App**: Premium dark-themed web interface for easy image/video analysis.
+*   **Auditability**: Detailed CSV logs of every detection event for verification and diagnostics.
 
-## Core objective
+## 📁 Project Structure
 
-Count plants by spatial position (one position = one plant), not appearance-only identity.
+*   `research/`: Scripts for training, evaluation, validation, and benchmarking.
+*   `flask_app/`: Production-ready web server and premium UI.
+*   `finetune_data/`: Dataset configuration and training labels.
+*   `_finetune_prep.py`: Preprocessing utility for data preparation.
 
-## Quick start
+## 🛠 Usage
 
-1. Create/activate a virtual environment.
-2. Install dependencies:
-
-```powershell
-pip install -r requirements.txt
+### Training & Research
+Run the ablation study to find the best model for your needs:
+```bash
+python research/01_train_ablation.py
+python research/02_evaluate_models.py
 ```
 
-3. Run web app:
-
-```powershell
-python app.py
+### Quantization
+Export the best model for mobile/edge use:
+```bash
+python research/03_export_quantize.py
 ```
 
-4. Or run the notebook pipeline in `Untitled25.ipynb`.
-
-## Fine-tuning data
-
-Dataset is in YOLO format under `finetune_data/`.
-
-Train example:
-
-```powershell
-yolo train model=yolov8m.pt data=finetune_data/data.yaml epochs=30 imgsz=640 batch=4 name=plant_finetune
+### Deployment
+Launch the interactive web portal:
+```bash
+python flask_app/app.py
 ```
 
-## Notes
-
-- Generated runtime artifacts are ignored (`output_*.mp4`, audit CSVs, summaries).
-- Model weight files (`*.pt`) are ignored; add your trained weights locally (for example `plant_finetuned.pt`) when running inference.
+## 📊 Methodology
+This project follows a rigorous research approach, documenting Precision, Recall, F1, mAP, and inference latency across all model variants and quantization levels.
