@@ -1,0 +1,4 @@
+format,precision,recall,f1,mAP50,mAP50_95,inference_ms,avg_predict_ms,size_mb,model_path,postprocess_ms,preprocess_ms,val_time_sec
+pytorch_fp32,0.7981,0.9066,0.8489,0.9347,0.7347,343.79,321.29,21.45,C:\Users\sunzi\Downloads\Plant grid\runs\ablation\yolov8s\weights\best.pt,2.41,2.8,11.0
+onnx,0.0,0.0,0.0,0.0,0.0,258.95,302.14,42.75,C:\Users\sunzi\Downloads\Plant grid\runs\ablation\yolov8s\weights\best.onnx,5.22,6.15,8.4
+onnx_fp16,0.8677,0.8351,0.8511,0.9409,0.7354,228.01,322.71,42.65,C:\Users\sunzi\Downloads\Plant grid\runs\ablation\yolov8s\weights\best.onnx,4.81,5.5,8.1

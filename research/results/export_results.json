@@ -1,0 +1,37 @@
+[
+  {
+    "format": "pytorch_fp32",
+    "exported_path": "C:\\Users\\sunzi\\Downloads\\Plant grid\\runs\\ablation\\yolov8s\\weights\\best.pt",
+    "size_mb": 21.45,
+    "export_time_sec": 0
+  },
+  {
+    "format": "onnx",
+    "exported_path": "C:\\Users\\sunzi\\Downloads\\Plant grid\\runs\\ablation\\yolov8s\\weights\\best.onnx",
+    "size_mb": 42.65,
+    "export_time_sec": 91.0,
+    "source_variant": "yolov8s"
+  },
+  {
+    "format": "onnx_fp16",
+    "exported_path": "C:\\Users\\sunzi\\Downloads\\Plant grid\\runs\\ablation\\yolov8s\\weights\\best.onnx",
+    "size_mb": 21.36,
+    "export_time_sec": 5.9,
+    "source_variant": "yolov8s"
+  },
+  {
+    "format": "tflite",
+    "error": "No module named 'onnx2tf'",
+    "source_variant": "yolov8s"
+  },
+  {
+    "format": "tflite_fp16",
+    "error": "No module named 'onnx2tf'",
+    "source_variant": "yolov8s"
+  },
+  {
+    "format": "tflite_int8",
+    "error": "No module named 'onnx2tf'",
+    "source_variant": "yolov8s"
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "format": "pytorch_fp32",
+    "model_path": "C:\\Users\\sunzi\\Downloads\\Plant grid\\runs\\ablation\\yolov8s\\weights\\best.pt",
+    "size_mb": 21.45,
+    "precision": 0.7981,
+    "recall": 0.9066,
+    "mAP50": 0.9347,
+    "mAP50_95": 0.7347,
+    "f1": 0.8489,
+    "inference_ms": 343.79,
+    "preprocess_ms": 2.8,
+    "postprocess_ms": 2.41,
+    "avg_predict_ms": 321.29,
+    "val_time_sec": 11.0
+  },
+  {
+    "format": "onnx",
+    "model_path": "C:\\Users\\sunzi\\Downloads\\Plant grid\\runs\\ablation\\yolov8s\\weights\\best.onnx",
+    "size_mb": 42.75,
+    "precision": 0.0,
+    "recall": 0.0,
+    "mAP50": 0.0,
+    "mAP50_95": 0.0,
+    "f1": 0.0,
+    "inference_ms": 258.95,
+    "preprocess_ms": 6.15,
+    "postprocess_ms": 5.22,
+    "avg_predict_ms": 302.14,
+    "val_time_sec": 8.4
+  },
+  {
+    "format": "onnx_fp16",
+    "model_path": "C:\\Users\\sunzi\\Downloads\\Plant grid\\runs\\ablation\\yolov8s\\weights\\best.onnx",
+    "size_mb": 42.65,
+    "precision": 0.8677,
+    "recall": 0.8351,
+    "mAP50": 0.9409,
+    "mAP50_95": 0.7354,
+    "f1": 0.8511,
+    "inference_ms": 228.01,
+    "preprocess_ms": 5.5,
+    "postprocess_ms": 4.81,
+    "avg_predict_ms": 322.71,
+    "val_time_sec": 8.1
+  }
+]
